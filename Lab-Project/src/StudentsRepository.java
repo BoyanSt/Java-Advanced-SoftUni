@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class StudentsRepository {
@@ -22,25 +26,37 @@ public class StudentsRepository {
         return isDataInitialized;
     }
 
-    public static void initializeData(){
+    public static void initializeData(String fileName) {
         if (isDataInitialized){
             System.out.println(ExceptionMessages.DATA_ALREADY_INITIALIZED);
             return;
         }
 
         setStudentsByCourse();
-        readData();
+
+        try {
+            readData(fileName);
+        } catch (IOException e){
+            OutputWriter.writeMessageOnNewLine(ExceptionMessages.INVALID_PATH);
+        }
+
     }
 
-    public static void readData(){
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
+    public static void readData(String fileName) throws IOException {
+
+        String path = SessionData.currentPath + "\\" + fileName;
+        List<String> lines = Files.readAllLines(Paths.get(path));
         String course = "";
         String student = "";
         int mark;
 
-        while (!input.equals("")){
-            String[] token = input.split("\\s+");
+        for (String line : lines) {
+            String[] token = line.split("\\s+");
+
+            if (token.length != 3){
+                OutputWriter.writeMessageOnNewLine(ExceptionMessages.INVALID_INPUTDATA_FILE);
+                return;
+            }
             course = token[0];
             student = token[1];
             mark = Integer.parseInt(token[2]);
@@ -58,7 +74,6 @@ public class StudentsRepository {
                 }
             }
 
-            input = scan.nextLine();
         }
 
         isDataInitialized = true;
@@ -109,4 +124,6 @@ public class StudentsRepository {
             OutputWriter.printStudent(entry.getKey(), entry.getValue());
         }
     }
+
+
 }

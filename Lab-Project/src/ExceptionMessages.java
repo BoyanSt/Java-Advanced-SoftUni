@@ -10,4 +10,5 @@ public class ExceptionMessages {
     public static final String INVALID_OUTPUT_LENGTH =
             "Actual and expected file are with different length.";
     public static final String INVALID_DESTINATION = "Cannot go higher in the folder hierarchy.";
+    public static final String INVALID_INPUTDATA_FILE = "The input data file is invalid.";
 }

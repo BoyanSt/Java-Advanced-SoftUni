@@ -82,7 +82,7 @@ public class IOManager {
         } else {
             // go to given directory
             String currPath = SessionData.currentPath;
-            currPath += currPath + "\\" + relativePath;
+            currPath += "\\" + relativePath;
             changeCurrentDirAbsolute(currPath);
         }
     }
