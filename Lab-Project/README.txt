@@ -1,1 +1,0 @@
-This is my lab project during the course Java Advanced at SoftUni, Sofia, Bulgaria
